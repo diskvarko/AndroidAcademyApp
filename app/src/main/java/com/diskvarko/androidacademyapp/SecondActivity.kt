@@ -29,6 +29,6 @@ class SecondActivity : AppCompatActivity() {
     fun changeImage() {
         val rand = Random.nextInt(imageArraySecond.size)
         binding.imageView.setImageResource(imageArraySecond[rand])
-        binding.viewMassage.text = this.getString(R.string.set_text)
+        binding.viewMassage.text = this.getString(R.string.set_text_two)
     }
 }
