@@ -8,7 +8,7 @@ import kotlin.random.Random
 
 
 class SecondActivity : AppCompatActivity() {
-    val imageArraySecond = arrayListOf(R.drawable.stich1, R.drawable.stich2, R.drawable.stich3)
+
     private lateinit var binding: ActivitySecondBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +17,6 @@ class SecondActivity : AppCompatActivity() {
         binding = ActivitySecondBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        binding.button.setOnClickListener { changeImage() }
         binding.buttonSecond.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -26,9 +24,5 @@ class SecondActivity : AppCompatActivity() {
 
     }
 
-    fun changeImage() {
-        val rand = Random.nextInt(imageArraySecond.size)
-        binding.imageView.setImageResource(imageArraySecond[rand])
-        binding.viewMassage.text = this.getString(R.string.set_text_two)
-    }
+
 }
