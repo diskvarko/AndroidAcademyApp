@@ -17,10 +17,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:src="@drawable/avengers_background"
+            android:src="@drawable/background_avangers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:background="@drawable/gradient"
+            app:layout_constraintBottom_toBottomOf="@+id/name_film"
+            app:layout_constraintEnd_toEndOf="@id/background"
+            app:layout_constraintStart_toStartOf="@id/background" />
 
         <Button
             android:id="@+id/back_button"
@@ -51,7 +59,7 @@
             app:layout_constraintTop_toTopOf="@+id/background" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/name_film"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="252dp"
@@ -76,57 +84,22 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/name_film" />
 
-        <ImageView
-            android:id="@+id/star1"
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/CustomRatingBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/star"
-            app:layout_constraintEnd_toStartOf="@+id/star2"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/genre" />
-
-        <ImageView
-            android:id="@+id/star2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3.25dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/star"
-            app:layout_constraintStart_toEndOf="@id/star1"
-            app:layout_constraintTop_toBottomOf="@+id/genre" />
-
-        <ImageView
-            android:id="@+id/star3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3.25dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/star"
-            app:layout_constraintStart_toEndOf="@id/star2"
-            app:layout_constraintTop_toBottomOf="@+id/genre" />
-
-        <ImageView
-            android:id="@+id/star4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3.25dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/star"
-            app:layout_constraintStart_toEndOf="@id/star3"
-            app:layout_constraintTop_toBottomOf="@+id/genre" />
-
-        <ImageView
-            android:id="@+id/star5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3.25dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/star_grey"
-            app:layout_constraintStart_toEndOf="@id/star4"
-            app:layout_constraintTop_toBottomOf="@+id/genre" />
+            android:layout_marginTop="6dp"
+            android:numStars="5"
+            android:rating="4"
+            android:backgroundTint="@color/pink"
+            android:progressBackgroundTint="@color/grey"
+            app:layout_constraintEnd_toStartOf="@id/review"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/genre" />
 
         <TextView
             android:id="@+id/review"
@@ -137,9 +110,9 @@
             android:fontFamily="@font/roboto_bold"
             android:text="@string/review"
             android:textAllCaps="true"
-            android:textColor="@color/gray"
+            android:textColor="@color/grey"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/star5"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar"
             app:layout_constraintTop_toBottomOf="@+id/genre" />
 
         <TextView
