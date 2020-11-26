@@ -3,8 +3,6 @@ package com.diskvarko.androidacademyapp
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent(this, MovieDetailsActivity::class.java)
+        val intent = Intent(this, FragmentDetailsActivity::class.java)
         startActivity(intent)
     }
 
