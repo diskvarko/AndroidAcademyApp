@@ -17,17 +17,12 @@ class FragmentMoviesList : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movies_list, container, false)
-        view?.findViewById<TextView>(R.id.name_film)?.apply {
-            setOnClickListener {
+        view?.findViewById<TextView>(R.id.name_film)?.setOnClickListener {
                 fragmentClick?.showFilmDetails()
-
-            }
         }
-        view?.findViewById<ImageView>(R.id.avengers_poster)?.apply {
-            setOnClickListener {
+        view?.findViewById<ImageView>(R.id.avengers_poster)?.setOnClickListener {
                 fragmentClick?.showFilmDetails()
 
-            }
         }
         return view
     }
