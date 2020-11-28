@@ -44,4 +44,9 @@ class FragmentMoviesList : Fragment() {
             fragmentClick = null
         }
 
+    companion object{
+        @JvmStatic
+        fun newInstance() = FragmentMoviesList()
+        const val MOVIE_LIST_TAG = "movieList"
+    }
 }

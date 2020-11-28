@@ -9,11 +9,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
 
 class FragmentMoviesDetails : Fragment() {
     private var fragmentClick: FragmentClick? = null
-    private lateinit var binding: FragmentMoviesDetailsBinding
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
