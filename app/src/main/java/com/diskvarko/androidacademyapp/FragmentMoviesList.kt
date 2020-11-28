@@ -18,28 +18,27 @@ class FragmentMoviesList : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movies_list, container, false)
         view?.findViewById<TextView>(R.id.name_film)?.setOnClickListener {
-                fragmentClick?.showFilmDetails()
+            fragmentClick?.showFilmDetails()
         }
         view?.findViewById<ImageView>(R.id.avengers_poster)?.setOnClickListener {
-                fragmentClick?.showFilmDetails()
-
+            fragmentClick?.showFilmDetails()
         }
         return view
     }
 
     override fun onAttach(context: Context) {
-            super.onAttach(context)
-            if (context is FragmentClick) {
-                fragmentClick = context
-            }
+        super.onAttach(context)
+        if (context is FragmentClick) {
+            fragmentClick = context
         }
+    }
 
     override fun onDetach() {
-            super.onDetach()
-            fragmentClick = null
-        }
+        super.onDetach()
+        fragmentClick = null
+    }
 
-    companion object{
+    companion object {
         fun newInstance() = FragmentMoviesList()
         const val MOVIE_LIST_TAG = "movieList"
     }
