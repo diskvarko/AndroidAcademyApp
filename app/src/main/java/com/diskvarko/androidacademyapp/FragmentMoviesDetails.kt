@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -19,10 +20,9 @@ class FragmentMoviesDetails : Fragment() {
             savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_movies_details, container, false)
-        view?.findViewById<ImageButton>(R.id.back_button)?.apply {
+        view?.findViewById<Button>(R.id.back_button)?.apply {
             setOnClickListener {
                 fragmentClick?.toList()
-
             }
         }
         return view
@@ -33,7 +33,6 @@ class FragmentMoviesDetails : Fragment() {
         if (context is FragmentClick) {
             fragmentClick = context
         }
-
     }
 
     override fun onDetach() {

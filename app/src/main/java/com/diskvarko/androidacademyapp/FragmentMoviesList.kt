@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 class FragmentMoviesList : Fragment() {
@@ -15,7 +16,13 @@ class FragmentMoviesList : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_movies_details, container, false)
+        val view = inflater.inflate(R.layout.fragment_movies_list, container, false)
+        view?.findViewById<TextView>(R.id.name_film)?.apply {
+            setOnClickListener {
+                fragmentClick?.showFilmDetails()
+
+            }
+        }
         view?.findViewById<ImageView>(R.id.avengers_poster)?.apply {
             setOnClickListener {
                 fragmentClick?.showFilmDetails()
@@ -30,7 +37,6 @@ class FragmentMoviesList : Fragment() {
             if (context is FragmentClick) {
                 fragmentClick = context
             }
-
         }
 
     override fun onDetach() {
