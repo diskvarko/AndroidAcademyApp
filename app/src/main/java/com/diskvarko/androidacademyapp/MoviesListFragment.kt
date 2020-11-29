@@ -9,21 +9,25 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
-class FragmentMoviesList : Fragment() {
+class MoviesListFragment : Fragment() {
+
     private var fragmentClick: FragmentClick? = null
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_movies_list, container, false)
-        view?.findViewById<TextView>(R.id.name_film)?.setOnClickListener {
+    ): View = inflater.inflate(R.layout.fragment_movies_list, container, false)
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<TextView>(R.id.name_film)?.setOnClickListener {
             fragmentClick?.showFilmDetails()
         }
-        view?.findViewById<ImageView>(R.id.avengers_poster)?.setOnClickListener {
+        view.findViewById<ImageView>(R.id.avengers_poster)?.setOnClickListener {
             fragmentClick?.showFilmDetails()
         }
-        return view
     }
 
     override fun onAttach(context: Context) {
@@ -39,7 +43,10 @@ class FragmentMoviesList : Fragment() {
     }
 
     companion object {
-        fun newInstance() = FragmentMoviesList()
+        fun newInstance() = MoviesListFragment()
         const val MOVIE_LIST_TAG = "movieList"
     }
+}
+interface FragmentClick {
+    fun showFilmDetails()
 }

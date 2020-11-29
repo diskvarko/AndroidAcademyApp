@@ -7,20 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
 
-class FragmentMoviesDetails : Fragment() {
+class MoviesDetailsFragment : Fragment() {
+
     private var fragmentClick: FragmentClick? = null
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
+            savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.fragment_movies_details, container, false)
 
-        val view = inflater.inflate(R.layout.fragment_movies_details, container, false)
-        view?.findViewById<Button>(R.id.back_button)?.setOnClickListener {
-            fragmentClick?.toList()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<Button>(R.id.back_button)?.setOnClickListener {
+              activity?.onBackPressed()
         }
-        return view
     }
 
     override fun onAttach(context: Context) {
@@ -35,6 +38,11 @@ class FragmentMoviesDetails : Fragment() {
         fragmentClick = null
     }
 
+    companion object {
+        fun newInstance(): MoviesDetailsFragment {
+            return MoviesDetailsFragment()
+        }
+    }
 }
 
 
