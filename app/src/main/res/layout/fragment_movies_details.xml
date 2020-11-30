@@ -89,13 +89,13 @@
 
         <RatingBar
             android:id="@+id/ratingBar"
-            style="@style/CustomRatingBarStyle"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:numStars="5"
             android:rating="4"
-            android:backgroundTint="@color/pink"
+            android:progressTint="@color/pink"
             android:progressBackgroundTint="@color/grey"
             app:layout_constraintEnd_toStartOf="@id/review"
             app:layout_constraintStart_toStartOf="@+id/guideline"
