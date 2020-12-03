@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 
 class MoviesDetailsFragment : Fragment() {
 
     private var fragmentClick: FragmentClick? = null
+
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
