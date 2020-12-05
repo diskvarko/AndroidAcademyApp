@@ -1,28 +1,35 @@
 package com.diskvarko.androidacademyapp
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+//import coil.load
+import kotlinx.android.synthetic.main.view_holder_actors.view.*
 
-class ActorsAdapter (
-    var actors: List<Actor>,
-    context: Context
+class ActorsAdapter(
+    private val cast: List<Actor>
+      //  context: MoviesDetailsFragment
 ) : RecyclerView.Adapter<ActorsViewHolder>() {
 
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-
+    //private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
-       return ActorsViewHolder(inflater.inflate(R.layout.fragment_movies_details,parent,false))
+        val context = parent.context
+        val inflater = LayoutInflater.from(context)
+        val someView = inflater.inflate(R.layout.view_holder_actors,parent,false)
+       return ActorsViewHolder(someView)
     }
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.avatar.load(cast[position].avatar)
+        holder.name.text = cast[position].name
     }
 
-    override fun getItemCount(): Int = actors.size
+    override fun getItemCount(): Int {
+        return cast.size
+    }
 
-    fun getItem(position: Int):Actor = actors[position]
+   // private fun getItem(position: Int):Actor = cast[position]
 }

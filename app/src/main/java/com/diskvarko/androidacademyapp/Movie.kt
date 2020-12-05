@@ -1,16 +1,65 @@
 package com.diskvarko.androidacademyapp
 
-import android.widget.ImageView
-import android.widget.RatingBar
-
 data class Movie(
-    val name: String,
-    val poster:ImageView,
-    val ratingBar: RatingBar,
-    val ratingAge: String,
-    val genre: String,
-    val review: Int,
-    val isLiked: Boolean,
-    val duration: Int) {
-    fun movies() {}
+        val background: Int,
+        val name: String,
+        val tag: String,
+        //val ratingStars: Int,
+        val reviews: Int,
+        val time: Int
+        //val pgRating: String
+) {
+    companion object {
+        fun getMoviesListData(): ArrayList<Movie> {
+            val movies = ArrayList<Movie>()
+            movies.apply {
+                add(
+                    Movie(
+                            R.drawable.avengers_background,
+                            "Avengers:End Game",
+                            "Action, Adventure, Fantasy",
+
+                            125,
+                            137
+
+                    )
+                )
+                            add (
+                            Movie(
+                                    R.drawable.avengers_background,
+                                    "Tenet",
+                                    "Action, Sci-Fi, Thriller ",
+
+                                    98,
+                                    97
+
+                            )
+                            )
+                            add (
+                            Movie(
+                                    R.drawable.avengers_background,
+                                    "Black Widow",
+                                    "Action, Adventure, Sci-Fi",
+
+                                    38,
+                                    102
+
+                            )
+                            )
+                            add (
+                            Movie(
+                                    R.drawable.avengers_background,
+                                    "Wonder Woman 1984",
+                                    "Action, Adventure, Fantasy",
+
+                                    74,
+                                    120
+
+                            )
+                            )
+
+            }
+            return movies
+        }
+    }
 }

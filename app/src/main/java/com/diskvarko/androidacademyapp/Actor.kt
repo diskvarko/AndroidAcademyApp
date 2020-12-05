@@ -1,36 +1,21 @@
 package com.diskvarko.androidacademyapp
 
 data class Actor(
-    val name: Int,
-    val avatar: Int
+        val avatar: Int,
+        val name: String
+
 ) {
-    fun actors(): List<Actor> {
-        return when (name) {
+    companion object {
+        fun actors(): ArrayList<Actor> {
+            val cast = ArrayList<Actor>()
             //cast Avengers
-            R.id.name_film -> listOf(
-                Actor(R.string.robert_downey_jr, R.drawable.robert),
-                Actor(R.string.chris_hemsworth, R.drawable.chris_hams),
-                Actor(R.string.chris_evans, R.drawable.chris_evans),
-                Actor(R.string.mark_ruffalo, R.drawable.mark)
-            )
-            2 -> listOf(
-                Actor(R.string.robert_downey_jr, R.drawable.robert),
-                Actor(R.string.chris_hemsworth, R.drawable.chris_hams),
-                Actor(R.string.chris_evans, R.drawable.chris_evans),
-                Actor(R.string.mark_ruffalo, R.drawable.mark)
-            )
-            3 -> listOf(
-                Actor(R.string.robert_downey_jr, R.drawable.robert),
-                Actor(R.string.chris_hemsworth, R.drawable.chris_hams),
-                Actor(R.string.chris_evans, R.drawable.chris_evans),
-                Actor(R.string.mark_ruffalo, R.drawable.mark)
-            )
-            else -> listOf(
-                Actor(R.string.robert_downey_jr, R.drawable.robert),
-                Actor(R.string.chris_hemsworth, R.drawable.chris_hams),
-                Actor(R.string.chris_evans, R.drawable.chris_evans),
-                Actor(R.string.mark_ruffalo, R.drawable.mark)
-            )
+            cast.apply {
+                add(Actor(R.drawable.robert, "Robert Downey Jr."))
+                add(Actor(R.drawable.chris_hams, "Chris Hemsworth"))
+                add(Actor(R.drawable.chris_evans, "Chris Evans"))
+                add(Actor(R.drawable.mark, "Mark Ruffalo"))
+            }
+            return cast
         }
     }
 }

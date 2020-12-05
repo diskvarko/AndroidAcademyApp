@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MoviesListFragment : Fragment() {
 
@@ -27,6 +29,17 @@ class MoviesListFragment : Fragment() {
         }
         view.findViewById<ImageView>(R.id.avengers_poster)?.setOnClickListener {
             fragmentClick?.showFilmDetails()
+        }
+        val movieListRecyclerView = view.findViewById<RecyclerView>(R.id.movie_list_recycler_view)
+        val movies = Movie.getMoviesListData()
+        movieListRecyclerView.adapter = MoviesAdapter(movies)
+        movieListRecyclerView.layoutManager = GridLayoutManager(view.context,2)
+        if(movies.size > 0){
+            movieListRecyclerView.visibility =android.view.View.VISIBLE
+
+        }else{
+            movieListRecyclerView.visibility =android.view.View.INVISIBLE
+
         }
     }
 
