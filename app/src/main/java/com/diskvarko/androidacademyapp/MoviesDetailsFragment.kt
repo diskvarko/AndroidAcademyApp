@@ -1,5 +1,6 @@
 package com.diskvarko.androidacademyapp
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MoviesDetailsFragment : Fragment() {
 
     private var fragmentClick: FragmentClick? = null
+    private var onBackButtonClickListener: MovieDetailsClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,19 +41,26 @@ class MoviesDetailsFragment : Fragment() {
         }
 
     }
-
-
-//    override fun onDetach() {
-//        super.onDetach()
-//        fragmentClick = null
-//    }
-
     companion object {
         fun newInstance(): MoviesDetailsFragment {
             return MoviesDetailsFragment()
         }
+        const val TAG = "MovieDetailsFragment"
     }
+
+    override fun onAttach(context: Context) {
+        if (context is MovieDetailsClickListener) {
+            onBackButtonClickListener = context
+        }
+        super.onAttach(context)
+    }
+    interface MovieDetailsClickListener {
+    fun onBackButtonClicked()
 }
+}
+
+
+
 
 
 

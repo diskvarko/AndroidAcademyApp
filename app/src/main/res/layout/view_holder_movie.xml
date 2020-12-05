@@ -6,10 +6,10 @@
     android:layout_width="170dp"
     android:layout_height="296dp"
     android:layout_marginStart="12dp"
-    android:layout_marginTop="108dp"
-    app:cardCornerRadius="8dp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_marginBottom="18dp"
+    app:cardCornerRadius="6dp"
+    android:clickable="true"
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,10 +19,13 @@
         <ImageView
             android:id="@+id/avengers_poster"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
             android:src="@drawable/movie"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <View
             android:id="@+id/view"
@@ -65,14 +68,15 @@
             android:id="@+id/name_film"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto_bold"
             android:text="@string/avengers_name_small"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/avengers_poster"
-            app:layout_constraintTop_toBottomOf="@id/review" />
+            app:layout_constraintTop_toBottomOf="@id/review"
+             />
 
         <TextView
             android:id="@+id/duration"
@@ -97,6 +101,7 @@
             app:layout_constraintTop_toTopOf="@id/avengers_poster" />
 
         <TextView
+            android:id="@+id/ratingAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"

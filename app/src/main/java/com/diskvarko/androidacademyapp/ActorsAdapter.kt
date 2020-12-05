@@ -9,11 +9,7 @@ import kotlinx.android.synthetic.main.view_holder_actors.view.*
 
 class ActorsAdapter(
     private val cast: List<Actor>
-      //  context: MoviesDetailsFragment
 ) : RecyclerView.Adapter<ActorsViewHolder>() {
-
-
-    //private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
         val context = parent.context
@@ -23,7 +19,7 @@ class ActorsAdapter(
     }
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
-        holder.avatar.load(cast[position].avatar)
+        holder.avatar.setImageResource(cast[position].avatar)
         holder.name.text = cast[position].name
     }
 
@@ -31,5 +27,4 @@ class ActorsAdapter(
         return cast.size
     }
 
-   // private fun getItem(position: Int):Actor = cast[position]
 }
