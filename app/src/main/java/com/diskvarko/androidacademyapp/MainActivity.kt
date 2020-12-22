@@ -2,35 +2,54 @@ package com.diskvarko.androidacademyapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.diskvarko.androidacademyapp.MoviesListFragment.Companion.MOVIE_LIST_TAG
+import com.diskvarko.androidacademyapp.MoviesListFragment.Companion.TAG
 import com.diskvarko.androidacademyapp.MoviesListFragment.Companion.newInstance
 
 
-class MainActivity : AppCompatActivity(), FragmentClick {
+class MainActivity : AppCompatActivity(),  MoviesDetailsFragment.MovieDetailsClickListener {
 
-    private var someFragment: MoviesListFragment? = null
+    private lateinit var rootFragment: MoviesListFragment
+    private lateinit var detailsFragment: MoviesDetailsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         if (savedInstanceState == null) {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_container, MoviesListFragment.newInstance())
-                        .commit()
-
-
+            rootFragment = MoviesListFragment.newInstance(object : MoviesAdapter.OnMovieClickListener {
+                override fun onMovieClick(movie: Movie) {
+                    supportFragmentManager
+                            .beginTransaction()
+                            .add(
+                                    R.id.main_container,
+                                    MoviesDetailsFragment.newInstance(),
+                                    MoviesDetailsFragment.TAG
+                            )
+                            .addToBackStack(MoviesDetailsFragment.TAG)
+                            .commit()
+                }
+            })
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(
+                            R.id.main_container,
+                            rootFragment,
+                            MoviesListFragment.TAG
+                    )
+                    .commit()
         } else {
-            someFragment =
-                    supportFragmentManager.findFragmentByTag(MOVIE_LIST_TAG) as? MoviesListFragment
+            val movieList = supportFragmentManager.findFragmentByTag(MoviesListFragment.TAG)
+            rootFragment = movieList as MoviesListFragment
+
+            val movieDetails = supportFragmentManager.findFragmentByTag(MoviesDetailsFragment.TAG)
+            if (movieDetails != null) {
+                detailsFragment = movieDetails as MoviesDetailsFragment
+            }
         }
     }
 
-    override fun showFilmDetails() {
-        supportFragmentManager.beginTransaction()
-                .add(R.id.main_container, MoviesDetailsFragment.newInstance())
-                .addToBackStack(null)
-                .commit()
-
+    override fun onBackButtonClicked() {
+        onBackPressed()
     }
 }
 

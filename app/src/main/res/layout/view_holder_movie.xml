@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="170dp"
+    android:layout_height="296dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginBottom="18dp"
+    app:cardCornerRadius="6dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/avengers_poster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
+            android:src="@drawable/movie"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient"
+            app:layout_constraintBottom_toBottomOf="@+id/avengers_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="22dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/genre"
+            android:textColor="@color/pink"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/avengers_poster"
+            app:layout_constraintStart_toStartOf="@id/avengers_poster" />
+
+        <TextView
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="228dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/review"
+            android:textAllCaps="true"
+            android:textColor="@color/grey"
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="@id/avengers_poster"
+            app:layout_constraintTop_toTopOf="@id/avengers_poster" />
+
+        <TextView
+            android:id="@+id/name_film"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/avengers_name_small"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/avengers_poster"
+            app:layout_constraintTop_toBottomOf="@id/review"
+             />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/length_avengers"
+            android:textColor="#565665"
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="@id/avengers_poster"
+            app:layout_constraintTop_toBottomOf="@id/name_film" />
+
+        <View
+            android:id="@+id/rectangle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/radial_angl"
+            app:layout_constraintStart_toStartOf="@id/avengers_poster"
+            app:layout_constraintTop_toTopOf="@id/avengers_poster" />
+
+        <TextView
+            android:id="@+id/ratingAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/background"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/rating_13"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/rectangle"
+            app:layout_constraintStart_toStartOf="@id/rectangle"
+            app:layout_constraintTop_toTopOf="@id/rectangle" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="144dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="6dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_like"
+            app:layout_constraintEnd_toEndOf="@id/avengers_poster"
+            app:layout_constraintStart_toStartOf="@id/avengers_poster"
+            app:layout_constraintTop_toTopOf="@id/avengers_poster" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/grey"
+            android:progressTint="@color/pink"
+            android:rating="4"
+            android:scaleX="0.65"
+            android:scaleY="0.65"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            app:layout_constraintStart_toStartOf="@id/avengers_poster"
+            app:layout_constraintTop_toBottomOf="@id/genre" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
