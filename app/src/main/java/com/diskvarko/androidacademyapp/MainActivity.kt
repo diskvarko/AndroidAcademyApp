@@ -2,8 +2,14 @@ package com.diskvarko.androidacademyapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.diskvarko.androidacademyapp.MoviesListFragment.Companion.TAG
 import com.diskvarko.androidacademyapp.MoviesListFragment.Companion.newInstance
+import com.diskvarko.androidacademyapp.data.Movie
+import com.diskvarko.androidacademyapp.data.loadMovies
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(),  MoviesDetailsFragment.MovieDetailsClickListener {
@@ -11,32 +17,32 @@ class MainActivity : AppCompatActivity(),  MoviesDetailsFragment.MovieDetailsCli
     private lateinit var rootFragment: MoviesListFragment
     private lateinit var detailsFragment: MoviesDetailsFragment
 
+    companion object {
+        var movies: List<Movie> = listOf()
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        lifecycleScope.launch {
+            val operation = async(Dispatchers.IO) {
+                movies = loadMovies(applicationContext)
+            }
+            operation.await()
+        }
+
         if (savedInstanceState == null) {
-            rootFragment = MoviesListFragment.newInstance(object : MoviesAdapter.OnMovieClickListener {
-                override fun onMovieClick(movie: Movie) {
-                    supportFragmentManager
-                            .beginTransaction()
-                            .add(
-                                    R.id.main_container,
-                                    MoviesDetailsFragment.newInstance(),
-                                    MoviesDetailsFragment.TAG
-                            )
-                            .addToBackStack(MoviesDetailsFragment.TAG)
-                            .commit()
-                }
-            })
+            rootFragment = MoviesListFragment.newInstance()
             supportFragmentManager
-                    .beginTransaction()
-                    .add(
-                            R.id.main_container,
-                            rootFragment,
-                            MoviesListFragment.TAG
-                    )
-                    .commit()
+                .beginTransaction()
+                .add(
+                    R.id.main_container,
+                    rootFragment,
+                    MoviesListFragment.TAG
+                )
+                .commit()
         } else {
             val movieList = supportFragmentManager.findFragmentByTag(MoviesListFragment.TAG)
             rootFragment = movieList as MoviesListFragment
@@ -51,6 +57,8 @@ class MainActivity : AppCompatActivity(),  MoviesDetailsFragment.MovieDetailsCli
     override fun onBackButtonClicked() {
         onBackPressed()
     }
+
+
 }
 
 

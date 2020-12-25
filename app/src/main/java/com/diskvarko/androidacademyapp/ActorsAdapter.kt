@@ -3,13 +3,13 @@ package com.diskvarko.androidacademyapp
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.diskvarko.androidacademyapp.data.Actor
 //import coil.load
 import kotlinx.android.synthetic.main.view_holder_actors.view.*
 
-class ActorsAdapter(
-    private val cast: List<Actor>
-) : RecyclerView.Adapter<ActorsViewHolder>() {
+class ActorsAdapter() : RecyclerView.Adapter<ActorsViewHolder>() {
+
+    private var cast: List<Actor> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
         val context = parent.context
@@ -19,12 +19,15 @@ class ActorsAdapter(
     }
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {
-        holder.avatar.setImageResource(cast[position].avatar)
-        holder.name.text = cast[position].name
+        holder.bind(cast[position])
     }
 
     override fun getItemCount(): Int {
         return cast.size
     }
 
+    fun updateActors(newActors: List<Actor>) {
+        cast = newActors
+        notifyDataSetChanged()
+    }
 }

@@ -8,27 +8,18 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.diskvarko.androidacademyapp.data.Movie
 
-class MoviesAdapter(
-        private val movies: List<Movie>,private val movieClickListener: OnMovieClickListener)
-    : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesAdapter(private val movieClickListener: OnMovieClickListener)
+    : RecyclerView.Adapter<MoviesViewHolder>() {
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val background: ImageView = view.findViewById(R.id.avengers_poster)
-        val name: TextView = view.findViewById(R.id.name_film)
-        val tag: TextView = view.findViewById(R.id.genre)
-        val ratingStars = view.findViewById<RatingBar>(R.id.ratingBar)!!
-        val rating: TextView = view.findViewById(R.id.review)
-        val time: TextView = view.findViewById(R.id.duration)
-        val pgRating: TextView = view.findViewById(R.id.ratingAge)
+    private  var movies: List<Movie> = listOf()
 
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val movieView = inflater.inflate(R.layout.view_holder_movie, parent, false)
-        return ViewHolder(movieView)
+        return MoviesViewHolder(movieView, movieClickListener )
     }
 
 
@@ -36,8 +27,9 @@ class MoviesAdapter(
         return movies.size
     }
 
-    interface OnRecyclerItemClicked {
-        fun onClick(movieNum: Int)
+    fun setMovies(newMovies: List<Movie>) {
+        movies = newMovies
+        notifyDataSetChanged()
     }
 
     fun getCount(): Int = movies.size
@@ -46,19 +38,7 @@ class MoviesAdapter(
         fun onMovieClick(movie: Movie)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        movies[position].apply {
-            holder.background.load(background)
-            holder.name.text = name
-            holder.rating.text = "$reviews Reviews"
-            holder.tag.text = tag
-            holder.time.text = "$time min"
-            holder.ratingStars.rating = ratingStars.toFloat()
-            holder.pgRating.text = pgRating
-        }
-        holder.itemView.setOnClickListener {
-            movieClickListener.onMovieClick(movies[position])
-        }
-
+    override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
+       holder.bind(movies[position])
     }
 }
