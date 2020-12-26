@@ -20,13 +20,14 @@ class MoviesDetailsFragment : Fragment() {
     private var onBackButtonClickListener: MovieDetailsClickListener? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_movies_details, container, false)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
 
         val poster = view.findViewById<ImageView>(R.id.background)
@@ -41,16 +42,22 @@ class MoviesDetailsFragment : Fragment() {
         val movieId = arguments?.getInt(MOVIE_ID)
         movie = MainActivity.movies.single { it.id == movieId }
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.actor_list)
-        recyclerView.adapter = ActorsAdapter()
-        recyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        (recyclerView.adapter as ActorsAdapter).updateActors(movie.actors)
+        val cast = movie.actors
+        val list = view.findViewById<RecyclerView>(R.id.actor_list)
+        list.adapter = ActorsAdapter(cast)
+        list.layoutManager =
+                LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
+
+        if (cast.isNotEmpty()) {
+            list.visibility = android.view.View.VISIBLE
+        } else {
+            list.visibility = android.view.View.INVISIBLE
+        }
         if (movie.actors.isEmpty()) view.findViewById<TextView>(R.id.cast).visibility = View.GONE
 
         poster.load(movie.backdrop)
         title.text = movie.title
-        pgRating.text = movie.minimumAge.toString()
+        pgRating.text = "${movie.minimumAge}+"
         description.text = movie.overview
 
     }

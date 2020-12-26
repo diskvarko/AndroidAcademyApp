@@ -1,5 +1,6 @@
 package com.diskvarko.androidacademyapp
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,9 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
     private var movies: List<Movie> = listOf()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_movies_list, container, false)
 
 
@@ -26,7 +27,13 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
         movies = MainActivity.movies
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.movie_list_recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        if (activity!!.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        } else {
+            recyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
+        }
+
         recyclerView.adapter = MoviesAdapter(this)
         (recyclerView.adapter as MoviesAdapter).setMovies(movies)
 
@@ -39,14 +46,14 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
     override fun onMovieClick(movie: Movie) {
         requireActivity().supportFragmentManager
-            .beginTransaction()
-            .add(
-                R.id.main_container,
-                MoviesDetailsFragment.newInstance(movie.id),
-                MoviesDetailsFragment.TAG
-            )
-            .addToBackStack(MoviesDetailsFragment.TAG)
-            .commit()
+                .beginTransaction()
+                .add(
+                        R.id.main_container,
+                        MoviesDetailsFragment.newInstance(movie.id),
+                        MoviesDetailsFragment.TAG
+                )
+                .addToBackStack(MoviesDetailsFragment.TAG)
+                .commit()
     }
 }
 

@@ -13,7 +13,7 @@ class MoviesViewHolder(
         view: View,
         private val onMovieClickListener: MoviesAdapter.OnMovieClickListener
 ) :
-    RecyclerView.ViewHolder(view) {
+        RecyclerView.ViewHolder(view) {
     private val background: ImageView = view.findViewById(R.id.avengers_poster)
     private val name: TextView = view.findViewById(R.id.name_film)
     private val tag: TextView = view.findViewById(R.id.genre)
@@ -25,20 +25,20 @@ class MoviesViewHolder(
 
     fun bind(movie: Movie) {
         background.load(movie.poster)
-        pgRating.text = "${movie.minimumAge} +"
+        pgRating.text = "${movie.minimumAge}+"
         name.text = movie.title
         time.text = "${movie.runtime} MIN"
-        ratingStars.rating = convertRating(movie.ratings)
+        ratingStars.rating = setRating(movie.ratings)
         review.text = "${movie.numberOfRatings} REVIEWS"
-        tag.text = getTags(movie.genres)
+        tag.text = setTags(movie.genres)
 
         clickItem.setOnClickListener {
             onMovieClickListener.onMovieClick(movie)
         }
     }
 
-    private fun convertRating(rating10: Float): Float = rating10 / 2.0f
+    private fun setRating(rating10: Float): Float = rating10 / 2.0f
 
-    private fun getTags(genres: List<Genre>): String = genres.joinToString(", ") { it.name }
+    private fun setTags(genres: List<Genre>): String = genres.joinToString(", ") { it.name }
 
 }
