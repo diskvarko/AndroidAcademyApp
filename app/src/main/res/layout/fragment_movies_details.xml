@@ -24,14 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--        <View-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="360dp"-->
-        <!--            android:background="@drawable/gradient"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@+id/name_film"-->
-        <!--            app:layout_constraintEnd_toEndOf="@id/background"-->
-        <!--            app:layout_constraintStart_toStartOf="@id/background" />-->
-
         <Button
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
