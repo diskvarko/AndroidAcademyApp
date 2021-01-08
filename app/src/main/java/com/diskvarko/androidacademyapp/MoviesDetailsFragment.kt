@@ -47,6 +47,7 @@ class MoviesDetailsFragment : Fragment() {
         list.adapter = ActorsAdapter(cast)
         list.layoutManager =
                 LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
+        (list.adapter as ActorsAdapter).updateActors(cast)
 
         if (cast.isNotEmpty()) {
             list.visibility = android.view.View.VISIBLE
