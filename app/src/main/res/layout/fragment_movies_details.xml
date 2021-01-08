@@ -16,19 +16,13 @@
             android:id="@+id/background"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:foreground="@drawable/gradient"
+            android:scaleType="fitXY"
             android:src="@drawable/background_avangers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="360dp"
-            android:background="@drawable/gradient"
-            app:layout_constraintBottom_toBottomOf="@+id/name_film"
-            app:layout_constraintEnd_toEndOf="@id/background"
-            app:layout_constraintStart_toStartOf="@id/background" />
 
         <Button
             android:id="@+id/back_button"
@@ -47,7 +41,7 @@
             tools:ignore="RtlHardcoded" />
 
         <TextView
-            android:id="@+id/rating"
+            android:id="@+id/ratingAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="226dp"
@@ -94,9 +88,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:numStars="5"
-            android:rating="4"
-            android:progressTint="@color/pink"
             android:progressBackgroundTint="@color/grey"
+            android:progressTint="@color/pink"
+            android:rating="4"
             app:layout_constraintEnd_toStartOf="@id/review"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@id/genre" />
@@ -128,7 +122,7 @@
             app:layout_constraintTop_toBottomOf="@id/review" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/description_storyline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -136,7 +130,7 @@
             android:text="@string/story"
             android:textColor="@color/white"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/storyline" />
@@ -151,19 +145,18 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/description_storyline" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/actor_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cast"
-            tools:listitem="@layout/view_holder_actors"
-           />
+            app:layout_constraintTop_toBottomOf="@id/cast" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -172,18 +165,5 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="actor_list" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
