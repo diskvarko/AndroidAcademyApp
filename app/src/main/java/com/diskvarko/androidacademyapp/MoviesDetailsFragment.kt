@@ -52,9 +52,12 @@ class MoviesDetailsFragment : Fragment() {
         if (cast.isNotEmpty()) {
             list.visibility = android.view.View.VISIBLE
         } else {
+            val textView = view.findViewById<TextView>(R.id.cast)
+
             list.visibility = android.view.View.INVISIBLE
+            textView.visibility = View.GONE
         }
-        if (movie.actors.isEmpty()) view.findViewById<TextView>(R.id.cast).visibility = View.GONE
+
 
         poster.load(movie.backdrop)
         title.text = movie.title
