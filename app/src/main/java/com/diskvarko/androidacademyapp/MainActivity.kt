@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.data.loadMovies
+import com.diskvarko.androidacademyapp.movieDetails.MoviesDetailsFragment
+import com.diskvarko.androidacademyapp.movieList.MoviesListFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -21,13 +23,6 @@ class MainActivity : AppCompatActivity(), MoviesDetailsFragment.MovieDetailsClic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        lifecycleScope.launch {
-            val operation = async(Dispatchers.IO) {
-                movies = loadMovies(applicationContext)
-            }
-            operation.await()
-        }
 
         setContentView(R.layout.activity_main)
 

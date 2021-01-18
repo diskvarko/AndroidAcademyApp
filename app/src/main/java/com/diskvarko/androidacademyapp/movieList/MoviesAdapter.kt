@@ -1,14 +1,16 @@
-package com.diskvarko.androidacademyapp
+package com.diskvarko.androidacademyapp.movieList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 
 class MoviesAdapter(private val movieClickListener: OnMovieClickListener)
     : RecyclerView.Adapter<MoviesViewHolder>() {
 
     private var movies: List<Movie> = listOf()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val context = parent.context
@@ -26,7 +28,6 @@ class MoviesAdapter(private val movieClickListener: OnMovieClickListener)
         notifyDataSetChanged()
     }
 
-    fun getCount(): Int = movies.size
 
     interface OnMovieClickListener {
         fun onMovieClick(movie: Movie)
