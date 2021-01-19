@@ -1,4 +1,4 @@
-package com.diskvarko.androidacademyapp.movieDetails
+package com.diskvarko.androidacademyapp
 
 import android.view.View
 import android.widget.ImageView

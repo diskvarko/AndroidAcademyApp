@@ -1,9 +1,10 @@
-package com.diskvarko.androidacademyapp.movieList
+package com.diskvarko.androidacademyapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.diskvarko.androidacademyapp.MoviesInteractor
 import com.diskvarko.androidacademyapp.data.Movie
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.diskvarko.androidacademyapp.movieList
+package com.diskvarko.androidacademyapp
 
 import android.view.View
 import android.widget.ImageView
@@ -6,7 +6,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Genre
 import com.diskvarko.androidacademyapp.data.Movie
 

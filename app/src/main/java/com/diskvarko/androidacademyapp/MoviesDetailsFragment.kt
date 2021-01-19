@@ -5,19 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.diskvarko.androidacademyapp.data.Genre
 import com.diskvarko.androidacademyapp.data.Movie
+import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
 
 class MoviesDetailsFragment : Fragment() {
 
     private lateinit var movie: Movie
     private var onBackButtonClickListener: MovieDetailsClickListener? = null
+
+    private var binding: FragmentMoviesDetailsBinding? = null
+    private val movieDetailsViewModel: MovieDetailsViewModel by viewModels() {
+        MovieDetailsViewModelFactory(MoviesInteractor(requireContext()))
+    }
+
+    private var selectedMovieID: Int = 0
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -28,55 +36,58 @@ class MoviesDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        binding = FragmentMoviesDetailsBinding.bind(view)
+        binding!!.backButton.setOnClickListener { activity?.onBackPressed() }
+
         super.onViewCreated(view, savedInstanceState)
 
-        val poster = view.findViewById<ImageView>(R.id.background)
-        val title = view.findViewById<TextView>(R.id.name_film)
-        val pgRating = view.findViewById<TextView>(R.id.ratingAge)
-        val description = view.findViewById<TextView>(R.id.description_storyline)
 
-        view.findViewById<Button>(R.id.back_button)?.setOnClickListener {
-            activity?.onBackPressed()
+        movieDetailsViewModel.selectedMovieList.observe(
+                this.viewLifecycleOwner,
+                Observer { movieDetailsViewModel.getMovie() })
+        if (savedInstanceState == null) {
+            movieDetailsViewModel.setMovie(selectedMovieID)
         }
 
-        val movieId = arguments?.getInt(MOVIE_ID)
-        movie = MainActivity.movies.single { it.id == movieId }
+        movieDetailsViewModel.movie.observe(viewLifecycleOwner) { movie: Movie ->
+            binding!!.background.load(movie.backdrop)
+            binding!!.nameFilm.text = movie.title
+            binding!!.ratingAge.text = "${movie.minimumAge} +"
+            binding!!.descriptionStoryline.text = movie.overview
+            binding!!.ratingBar.rating = setRating(movie.ratings)
+            binding!!.genre.text = setTags(movie.genres)
+            val reviewsCountText = "${movie.numberOfRatings} REVIEWS"
+            binding!!.review.text = reviewsCountText
 
-        val cast = movie.actors
-        val list = view.findViewById<RecyclerView>(R.id.actor_list)
-        list.adapter = ActorsAdapter(cast)
-        list.layoutManager =
-                LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
-        (list.adapter as ActorsAdapter).updateActors(cast)
+            binding!!.actorList.apply {
+                adapter = ActorsAdapter(movie.actors)
+                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            }
 
-        if (cast.isNotEmpty()) {
-            list.visibility = android.view.View.VISIBLE
-        } else {
-            val textView = view.findViewById<TextView>(R.id.cast)
+            if (movie.actors.isNotEmpty()) {
+                binding!!.actorList.visibility = View.VISIBLE
 
-            list.visibility = android.view.View.INVISIBLE
-            textView.visibility = View.GONE
+            } else binding!!.cast.visibility = View.INVISIBLE
+
+            (binding!!.actorList.adapter as ActorsAdapter).updateActors(movie.actors)
         }
 
-
-        poster.load(movie.backdrop)
-        title.text = movie.title
-        pgRating.text = "${movie.minimumAge}+"
-        description.text = movie.overview
 
     }
+
+    private fun setRating(rating10: Float): Float = rating10 / 2.0f
+
+    private fun setTags(genres: List<Genre>): String = genres.joinToString(", ") { it.name }
 
     companion object {
 
         private const val MOVIE_ID = "movieId"
         const val TAG = "MovieDetailsFragment"
 
-        fun newInstance(movieId: Int): MoviesDetailsFragment {
-            val bundle = Bundle()
-            bundle.putInt(MOVIE_ID, movieId)
-            val fragment = MoviesDetailsFragment()
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(movieID: Int): MoviesDetailsFragment {
+            val movieFragment = MoviesDetailsFragment()
+            movieFragment.selectedMovieID = movieID
+            return movieFragment
         }
 
     }
@@ -86,6 +97,11 @@ class MoviesDetailsFragment : Fragment() {
             onBackButtonClickListener = context
         }
         super.onAttach(context)
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     interface MovieDetailsClickListener {

@@ -1,4 +1,4 @@
-package com.diskvarko.androidacademyapp.movieList
+package com.diskvarko.androidacademyapp
 
 import android.content.Context
 import com.diskvarko.androidacademyapp.data.Movie

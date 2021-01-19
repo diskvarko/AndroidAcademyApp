@@ -2,14 +2,7 @@ package com.diskvarko.androidacademyapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.diskvarko.androidacademyapp.data.Movie
-import com.diskvarko.androidacademyapp.data.loadMovies
-import com.diskvarko.androidacademyapp.movieDetails.MoviesDetailsFragment
-import com.diskvarko.androidacademyapp.movieList.MoviesListFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), MoviesDetailsFragment.MovieDetailsClickListener {

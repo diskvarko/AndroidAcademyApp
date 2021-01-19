@@ -1,14 +1,14 @@
-package com.diskvarko.androidacademyapp.movieList
+package com.diskvarko.androidacademyapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class MovieListViewModelFactory(private val interactor: MoviesInteractor) :
-        ViewModelProvider.Factory {
+class MovieDetailsViewModelFactory(private val interactor: MoviesInteractor) :
+    ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = when (modelClass) {
-        MoviesViewModel::class.java -> MoviesViewModel(interactor)
+        MovieDetailsViewModel::class.java -> MovieDetailsViewModel(interactor)
         else -> throw IllegalArgumentException("$modelClass is not registered ViewModel")
     } as T
 }
