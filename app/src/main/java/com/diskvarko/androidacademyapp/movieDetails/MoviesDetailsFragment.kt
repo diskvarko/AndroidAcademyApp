@@ -1,4 +1,4 @@
-package com.diskvarko.androidacademyapp
+package com.diskvarko.androidacademyapp.movieDetails
 
 import android.content.Context
 import android.os.Bundle
@@ -11,21 +11,24 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
+import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Genre
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
 
 class MoviesDetailsFragment : Fragment() {
 
-    private lateinit var movie: Movie
     private var onBackButtonClickListener: MovieDetailsClickListener? = null
 
     private var binding: FragmentMoviesDetailsBinding? = null
+
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels() {
         MovieDetailsViewModelFactory(MoviesInteractor(requireContext()))
     }
 
     private var selectedMovieID: Int = 0
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -41,8 +44,7 @@ class MoviesDetailsFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-
-        movieDetailsViewModel.selectedMovieList.observe(
+        movieDetailsViewModel.moviesLiveData.observe(
                 this.viewLifecycleOwner,
                 Observer { movieDetailsViewModel.getMovie() })
         if (savedInstanceState == null) {
@@ -50,14 +52,14 @@ class MoviesDetailsFragment : Fragment() {
         }
 
         movieDetailsViewModel.movie.observe(viewLifecycleOwner) { movie: Movie ->
+
             binding!!.background.load(movie.backdrop)
             binding!!.nameFilm.text = movie.title
             binding!!.ratingAge.text = "${movie.minimumAge} +"
             binding!!.descriptionStoryline.text = movie.overview
             binding!!.ratingBar.rating = setRating(movie.ratings)
             binding!!.genre.text = setTags(movie.genres)
-            val reviewsCountText = "${movie.numberOfRatings} REVIEWS"
-            binding!!.review.text = reviewsCountText
+            binding!!.review.text = "${movie.numberOfRatings} REVIEWS"
 
             binding!!.actorList.apply {
                 adapter = ActorsAdapter(movie.actors)

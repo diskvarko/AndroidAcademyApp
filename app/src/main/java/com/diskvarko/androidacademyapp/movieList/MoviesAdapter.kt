@@ -1,8 +1,9 @@
-package com.diskvarko.androidacademyapp
+package com.diskvarko.androidacademyapp.movieList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 
 class MoviesAdapter(private val movieClickListener: OnMovieClickListener)

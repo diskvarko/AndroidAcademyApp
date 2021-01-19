@@ -1,4 +1,4 @@
-package com.diskvarko.androidacademyapp
+package com.diskvarko.androidacademyapp.movieList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesListBinding
+import com.diskvarko.androidacademyapp.movieDetails.MoviesDetailsFragment
 
 class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
@@ -38,14 +40,13 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
             it.adapter = MoviesAdapter(this)
         }
 
-        movieListViewModel.moviesList.observe(viewLifecycleOwner) {
+        movieListViewModel.movieListLiveData.observe(viewLifecycleOwner) {
             (binding.movieListRecyclerView.adapter as MoviesAdapter).setMovies(it)
         }
     }
 
     override fun onDestroyView() {
         _binding = null
-
         super.onDestroyView()
     }
 

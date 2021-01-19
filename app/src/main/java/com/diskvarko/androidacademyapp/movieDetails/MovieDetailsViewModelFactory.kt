@@ -1,10 +1,11 @@
-package com.diskvarko.androidacademyapp
+package com.diskvarko.androidacademyapp.movieDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
 
 class MovieDetailsViewModelFactory(private val interactor: MoviesInteractor) :
-    ViewModelProvider.Factory {
+        ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = when (modelClass) {

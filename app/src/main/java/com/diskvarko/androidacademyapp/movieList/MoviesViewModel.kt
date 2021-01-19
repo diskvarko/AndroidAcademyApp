@@ -1,17 +1,16 @@
-package com.diskvarko.androidacademyapp
+package com.diskvarko.androidacademyapp.movieList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.diskvarko.androidacademyapp.MoviesInteractor
 import com.diskvarko.androidacademyapp.data.Movie
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(private val interactor: MoviesInteractor) : ViewModel() {
 
     val _movieLiveData: MutableLiveData<List<Movie>> = MutableLiveData(emptyList())
-    val moviesList: LiveData<List<Movie>> get() = _movieLiveData
+    val movieListLiveData: LiveData<List<Movie>> get() = _movieLiveData
 
     init {
         getMovies()
@@ -19,7 +18,6 @@ class MoviesViewModel(private val interactor: MoviesInteractor) : ViewModel() {
 
     fun getMovies() {
         viewModelScope.launch {
-            val movies = interactor.getMoviesList()
             _movieLiveData.postValue(interactor.getMoviesList())
         }
     }

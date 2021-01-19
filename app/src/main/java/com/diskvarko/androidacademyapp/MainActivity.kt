@@ -2,7 +2,8 @@ package com.diskvarko.androidacademyapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.diskvarko.androidacademyapp.data.Movie
+import com.diskvarko.androidacademyapp.movieDetails.MoviesDetailsFragment
+import com.diskvarko.androidacademyapp.movieList.MoviesListFragment
 
 
 class MainActivity : AppCompatActivity(), MoviesDetailsFragment.MovieDetailsClickListener {
@@ -10,9 +11,6 @@ class MainActivity : AppCompatActivity(), MoviesDetailsFragment.MovieDetailsClic
     private lateinit var rootFragment: MoviesListFragment
     private lateinit var detailsFragment: MoviesDetailsFragment
 
-    companion object {
-        var movies: List<Movie> = listOf()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
