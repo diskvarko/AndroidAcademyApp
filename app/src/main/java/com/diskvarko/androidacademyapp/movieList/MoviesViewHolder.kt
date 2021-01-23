@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.diskvarko.androidacademyapp.R
-import com.diskvarko.androidacademyapp.data.Genre
 import com.diskvarko.androidacademyapp.data.Movie
+import com.diskvarko.androidacademyapp.network.Genre
 
 class MoviesViewHolder(
         view: View,

@@ -16,7 +16,7 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
     private val movieListViewModel: MoviesViewModel by viewModels()
     {
-        MovieListViewModelFactory(MoviesInteractor(requireContext()))
+        MovieListViewModelFactory(MoviesInteractor())
     }
     private val binding: FragmentMoviesListBinding get() = _binding!!
     private var _binding: FragmentMoviesListBinding? = null
@@ -33,7 +33,7 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieListViewModel.getMovies()
+        movieListViewModel.getMovieList()
 
         binding.movieListRecyclerView.let {
             it.layoutManager = GridLayoutManager(requireContext(), 2)

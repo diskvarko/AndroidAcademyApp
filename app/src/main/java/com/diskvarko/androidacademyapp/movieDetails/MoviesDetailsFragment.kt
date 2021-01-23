@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
 import com.diskvarko.androidacademyapp.R
-import com.diskvarko.androidacademyapp.data.Genre
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
+import com.diskvarko.androidacademyapp.network.Genre
 
 class MoviesDetailsFragment : Fragment() {
 
@@ -24,7 +24,7 @@ class MoviesDetailsFragment : Fragment() {
     private var binding: FragmentMoviesDetailsBinding? = null
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels() {
-        MovieDetailsViewModelFactory(MoviesInteractor(requireContext()))
+        MovieDetailsViewModelFactory(MoviesInteractor())
     }
 
     private var selectedMovieID: Int = 0
@@ -57,7 +57,7 @@ class MoviesDetailsFragment : Fragment() {
             binding!!.nameFilm.text = movie.title
             binding!!.ratingAge.text = "${movie.minimumAge} +"
             binding!!.descriptionStoryline.text = movie.overview
-            binding!!.ratingBar.rating = setRating(movie.ratings)
+            binding!!.ratingBar.rating = setRating(movie.ratings.toFloat())
             binding!!.genre.text = setTags(movie.genres)
             binding!!.review.text = "${movie.numberOfRatings} REVIEWS"
 
@@ -86,9 +86,9 @@ class MoviesDetailsFragment : Fragment() {
         private const val MOVIE_ID = "movieId"
         const val TAG = "MovieDetailsFragment"
 
-        fun newInstance(movieID: Int): MoviesDetailsFragment {
+        fun newInstance(movieID: Long): MoviesDetailsFragment {
             val movieFragment = MoviesDetailsFragment()
-            movieFragment.selectedMovieID = movieID
+            movieFragment.selectedMovieID = movieID.toInt()
             return movieFragment
         }
 

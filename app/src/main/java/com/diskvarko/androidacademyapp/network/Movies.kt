@@ -10,7 +10,7 @@ import kotlinx.serialization.json.*
 import kotlinx.serialization.internal.*
 
 @Serializable
-data class Movie (
+data class Movies (
     val page: Long,
     val results: List<Result>,
 

@@ -14,6 +14,11 @@ object Retrofit {
         ignoreUnknownKeys = true
     }
 
+//    private val okHttpClient = OkHttpClient
+//        .Builder()
+//        .addInterceptor(ApiKeyInterceptor())
+//        .build()
+
     private val retrofitBuilder = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(json.asConverterFactory(contentType))
@@ -21,9 +26,5 @@ object Retrofit {
 
     val movieApi: TheMovieApi = retrofitBuilder.create(TheMovieApi::class.java)
 
-    private val okHttpClient = OkHttpClient
-        .Builder()
-        .addInterceptor(ApiKeyInterceptor())
-        .build()
 
 }
