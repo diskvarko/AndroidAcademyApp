@@ -1,8 +1,8 @@
 package com.diskvarko.androidacademyapp.data
 
-import com.diskvarko.androidacademyapp.network.Configuration
-import com.diskvarko.androidacademyapp.network.Genre
-import com.diskvarko.androidacademyapp.network.Movies
+import com.diskvarko.androidacademyapp.network.data.Configuration
+import com.diskvarko.androidacademyapp.network.data.Genre
+import com.diskvarko.androidacademyapp.network.data.Movies
 import com.diskvarko.androidacademyapp.network.Retrofit.movieApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,7 +31,8 @@ private suspend fun getRuntime(movieId: Long): Int = movieApi.getDetails(movieId
 
 @ExperimentalSerializationApi
 suspend fun getMoviesList(): List<Movie> = withContext(Dispatchers.IO) {
-    val imagesBaseUrl = getConfiguration().images.secureBaseURL.dropLast(1)
+
+    val baseUrl = getConfiguration().images.secureBaseURL.dropLast(1)
 
     val genres: Map<Int, Genre> = getGenres()
 
@@ -40,15 +41,15 @@ suspend fun getMoviesList(): List<Movie> = withContext(Dispatchers.IO) {
             id = it.id,
             title = it.title,
             overview = it.overview,
-            poster = "$imagesBaseUrl/original/${it.posterPath}",
-            backdrop = "$imagesBaseUrl/original/${it.backdropPath}",
+            poster = "$baseUrl/original/${it.posterPath}",
+            backdrop = "$baseUrl/original/${it.backdropPath}",
             ratings = it.voteAverage.toFloat(),
             numberOfRatings = it.voteCount,
             minimumAge = if (it.adult) 16 else 13,
             runtime = getRuntime(it.id),
             genres = it.genreIDS.map { id -> genres.getOrDefault(id.toInt(), Genre(0, "")) }
                 .toList(),
-            actors = getActors(it.id).map { actor -> actor.copy(picture = "$imagesBaseUrl/original/${actor.picture}") }
+            actors = getActors(it.id).map { actor -> actor.copy(picture = "$baseUrl/original/${actor.picture}") }
         )
     }
 }

@@ -1,6 +1,6 @@
 package com.diskvarko.androidacademyapp.data
 
-import com.diskvarko.androidacademyapp.network.Genre
+import com.diskvarko.androidacademyapp.network.data.Genre
 
 data class Movie(
     val id: Long,

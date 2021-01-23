@@ -1,4 +1,4 @@
-package com.diskvarko.androidacademyapp.network
+package com.diskvarko.androidacademyapp.network.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

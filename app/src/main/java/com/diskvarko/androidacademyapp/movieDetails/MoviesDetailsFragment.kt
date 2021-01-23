@@ -15,7 +15,7 @@ import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
 import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
-import com.diskvarko.androidacademyapp.network.Genre
+import com.diskvarko.androidacademyapp.network.data.Genre
 
 class MoviesDetailsFragment : Fragment() {
 

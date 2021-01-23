@@ -1,5 +1,6 @@
 package com.diskvarko.androidacademyapp.network
 
+import com.diskvarko.androidacademyapp.network.data.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType

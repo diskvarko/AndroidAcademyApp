@@ -22,9 +22,9 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
     private var _binding: FragmentMoviesListBinding? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         return binding.root
@@ -57,14 +57,14 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
     override fun onMovieClick(movie: Movie) {
         requireActivity().supportFragmentManager
-                .beginTransaction()
-                .add(
-                        R.id.main_container,
-                        MoviesDetailsFragment.newInstance(movie.id),
-                        MoviesDetailsFragment.TAG
-                )
-                .addToBackStack(MoviesDetailsFragment.TAG)
-                .commit()
+            .beginTransaction()
+            .add(
+                R.id.main_container,
+                MoviesDetailsFragment.newInstance(movie.id),
+                MoviesDetailsFragment.TAG
+            )
+            .addToBackStack(MoviesDetailsFragment.TAG)
+            .commit()
     }
 }
 

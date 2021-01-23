@@ -1,5 +1,6 @@
 package com.diskvarko.androidacademyapp.network
 
+import com.diskvarko.androidacademyapp.network.data.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 

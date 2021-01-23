@@ -1,16 +1,10 @@
-// To parse the JSON, install kotlin's serialization plugin and do:
-//
-// val json  = Json(JsonConfiguration.Stable)
-// val movie = json.parse(Movie.serializer(), jsonString)
+package com.diskvarko.androidacademyapp.network.data
 
-package com.diskvarko.androidacademyapp.network
-
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-import kotlinx.serialization.internal.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
-data class Movies (
+data class Movies(
     val page: Long,
     val results: List<Result>,
 
@@ -22,7 +16,7 @@ data class Movies (
 )
 
 @Serializable
-data class Result (
+data class Result(
     val adult: Boolean,
 
     @SerialName("backdrop_path")
