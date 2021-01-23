@@ -1,19 +1,22 @@
 package com.diskvarko.androidacademyapp.network
 
+import com.diskvarko.androidacademyapp.data.Genre
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface TheMovieApi {
-    @GET ("configuration?api_key=$API_KEY")
+    @GET("configuration")
     suspend fun getConfiguration(): Configuration
 
-    @GET ("movie/popular?api_key=$API_KEY")
-    suspend fun getMovie(): Movie
+    @GET("movie/now_playing?page=1")
+    suspend fun getMovies(): Movie
 
-    @GET ("movie/{movie_id}?api_key=$API_KEY&language=$LANGUAGE")
-    suspend fun getDetails():Details
+    @GET("genre/movie/list")
+    suspend fun getGenres(): Genre
 
-    @GET("person/$API_KEY?api_key=$API_KEY&language=$LANGUAGE")
+    @GET("movie/{id}/credits")
+    suspend fun getCredits(@Path("id") movieId: Int): Credits
 
-    @GET("search/movie?api_key=$API_KEY&language=$LANGUAGE&page=1&include_adult=false")
-
+    @GET("movie/{movieID}")
+    suspend fun getDetails(@Path("movieID") movieId: Int): MovieDetails
 }
