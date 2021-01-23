@@ -11,10 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
 import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
+import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
 import com.diskvarko.androidacademyapp.network.Genre
 
 class MoviesDetailsFragment : Fragment() {
@@ -31,9 +31,9 @@ class MoviesDetailsFragment : Fragment() {
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_movies_details, container, false)
 
 
@@ -45,8 +45,8 @@ class MoviesDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         movieDetailsViewModel.moviesLiveData.observe(
-                this.viewLifecycleOwner,
-                Observer { movieDetailsViewModel.getMovie() })
+            this.viewLifecycleOwner,
+            Observer { movieDetailsViewModel.getMovie() })
         if (savedInstanceState == null) {
             movieDetailsViewModel.setMovie(selectedMovieID)
         }
@@ -63,7 +63,8 @@ class MoviesDetailsFragment : Fragment() {
 
             binding!!.actorList.apply {
                 adapter = ActorsAdapter(movie.actors)
-                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
 
             if (movie.actors.isNotEmpty()) {

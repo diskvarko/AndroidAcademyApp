@@ -46,7 +46,8 @@ suspend fun getMoviesList(): List<Movie> = withContext(Dispatchers.IO) {
             numberOfRatings = it.voteCount,
             minimumAge = if (it.adult) 16 else 13,
             runtime = getRuntime(it.id),
-            genres = it.genreIDS.map { id -> genres.getOrDefault(id.toInt(), Genre(0, "")) }.toList(),
+            genres = it.genreIDS.map { id -> genres.getOrDefault(id.toInt(), Genre(0, "")) }
+                .toList(),
             actors = getActors(it.id).map { actor -> actor.copy(picture = "$imagesBaseUrl/original/${actor.picture}") }
         )
     }
