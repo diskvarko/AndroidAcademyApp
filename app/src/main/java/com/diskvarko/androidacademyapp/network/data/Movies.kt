@@ -1,10 +1,13 @@
 package com.diskvarko.androidacademyapp.network.data
 
+
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+
 @Serializable
 data class Movies(
+
     val page: Long,
     val results: List<Result>,
 
