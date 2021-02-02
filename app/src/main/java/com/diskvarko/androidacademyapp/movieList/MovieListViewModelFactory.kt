@@ -2,6 +2,7 @@ package com.diskvarko.androidacademyapp.movieList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.diskvarko.androidacademyapp.MoviesInteractor
 
 class MovieListViewModelFactory(private val interactor: MoviesInteractor) :
     ViewModelProvider.Factory {

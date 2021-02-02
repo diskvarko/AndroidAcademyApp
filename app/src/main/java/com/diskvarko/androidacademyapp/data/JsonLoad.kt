@@ -38,7 +38,7 @@ suspend fun getMoviesList(): List<Movie> = withContext(Dispatchers.IO) {
 
     return@withContext getMovies().results.map {
         Movie(
-            id = it.id,
+            id = it.id.toInt(),
             title = it.title,
             overview = it.overview,
             poster = "$baseUrl/original/${it.posterPath}",

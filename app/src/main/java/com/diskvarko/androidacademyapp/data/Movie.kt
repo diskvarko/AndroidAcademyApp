@@ -2,13 +2,14 @@ package com.diskvarko.androidacademyapp.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.diskvarko.androidacademyapp.network.data.Genre
 
 @Entity(tableName = "movies")
 data class Movie(
-
+    @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Long,
+    val id: Int,
 
     @ColumnInfo(name = "title")
     val title: String,

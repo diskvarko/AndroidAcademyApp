@@ -7,36 +7,40 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.diskvarko.androidacademyapp.MoviesInteractor
 import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
-import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
 import com.diskvarko.androidacademyapp.network.data.Genre
+import com.diskvarko.androidacademyapp.room.MoviesDB
+import kotlinx.serialization.ExperimentalSerializationApi
 
 class MoviesDetailsFragment : Fragment() {
+
+    private val repository: MoviesInteractor by lazy {
+        val db = MoviesDB.createDb(this.requireContext().applicationContext)
+        MoviesInteractor(db.movieDao())
+    }
 
     private var onBackButtonClickListener: MovieDetailsClickListener? = null
 
     private var binding: FragmentMoviesDetailsBinding? = null
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels() {
-        MovieDetailsViewModelFactory(MoviesInteractor())
+        MovieDetailsViewModelFactory(repository)
     }
-
-    private var selectedMovieID: Int = 0
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_movies_details, container, false)
 
-
+    @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding = FragmentMoviesDetailsBinding.bind(view)
@@ -44,14 +48,11 @@ class MoviesDetailsFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        movieDetailsViewModel.moviesLiveData.observe(
-            this.viewLifecycleOwner,
-            Observer { movieDetailsViewModel.getMovie() })
-        if (savedInstanceState == null) {
-            movieDetailsViewModel.setMovie(selectedMovieID)
-        }
+        val movieId = arguments?.getInt(MOVIE_ID)
 
-        movieDetailsViewModel.movie.observe(viewLifecycleOwner) { movie: Movie ->
+        movieDetailsViewModel.getMovie(movieId!!)
+
+        movieDetailsViewModel.movieLiveData.observe(viewLifecycleOwner) { movie: Movie ->
 
             binding!!.background.load(movie.backdrop)
             binding!!.nameFilm.text = movie.title
@@ -64,7 +65,7 @@ class MoviesDetailsFragment : Fragment() {
             binding!!.actorList.apply {
                 adapter = ActorsAdapter(movie.actors)
                 layoutManager =
-                    LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                        LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
 
             if (movie.actors.isNotEmpty()) {
@@ -87,9 +88,11 @@ class MoviesDetailsFragment : Fragment() {
         private const val MOVIE_ID = "movieId"
         const val TAG = "MovieDetailsFragment"
 
-        fun newInstance(movieID: Long): MoviesDetailsFragment {
+        fun newInstance(movieId: Int): MoviesDetailsFragment {
+            val bundle = Bundle()
+            bundle.putInt(MOVIE_ID, movieId)
             val movieFragment = MoviesDetailsFragment()
-            movieFragment.selectedMovieID = movieID.toInt()
+            movieFragment.arguments = bundle
             return movieFragment
         }
 
