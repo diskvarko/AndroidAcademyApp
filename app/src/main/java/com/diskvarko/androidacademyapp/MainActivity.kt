@@ -20,13 +20,13 @@ class MainActivity : AppCompatActivity(), MoviesDetailsFragment.MovieDetailsClic
         if (savedInstanceState == null) {
             rootFragment = MoviesListFragment.newInstance()
             supportFragmentManager
-                    .beginTransaction()
-                    .add(
-                            R.id.main_container,
-                            rootFragment,
-                            MoviesListFragment.TAG
-                    )
-                    .commit()
+                .beginTransaction()
+                .add(
+                    R.id.main_container,
+                    rootFragment,
+                    MoviesListFragment.TAG
+                )
+                .commit()
         } else {
             val movieList = supportFragmentManager.findFragmentByTag(MoviesListFragment.TAG)
             rootFragment = movieList as MoviesListFragment

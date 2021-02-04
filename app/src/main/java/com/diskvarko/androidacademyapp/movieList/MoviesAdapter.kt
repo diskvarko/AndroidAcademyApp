@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 
-class MoviesAdapter(private val movieClickListener: OnMovieClickListener)
-    : RecyclerView.Adapter<MoviesViewHolder>() {
+class MoviesAdapter(private val movieClickListener: OnMovieClickListener) :
+    RecyclerView.Adapter<MoviesViewHolder>() {
 
     private var movies: List<Movie> = listOf()
 

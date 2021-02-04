@@ -7,14 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.diskvarko.androidacademyapp.R
-import com.diskvarko.androidacademyapp.data.Genre
 import com.diskvarko.androidacademyapp.data.Movie
+import com.diskvarko.androidacademyapp.network.data.Genre
 
 class MoviesViewHolder(
-        view: View,
-        private val onMovieClickListener: MoviesAdapter.OnMovieClickListener
+    view: View,
+    private val onMovieClickListener: MoviesAdapter.OnMovieClickListener
 ) :
-        RecyclerView.ViewHolder(view) {
+    RecyclerView.ViewHolder(view) {
     private val background: ImageView = view.findViewById(R.id.avengers_poster)
     private val name: TextView = view.findViewById(R.id.name_film)
     private val tag: TextView = view.findViewById(R.id.genre)

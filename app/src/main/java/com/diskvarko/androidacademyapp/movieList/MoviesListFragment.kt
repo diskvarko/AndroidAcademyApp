@@ -16,15 +16,15 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
     private val movieListViewModel: MoviesViewModel by viewModels()
     {
-        MovieListViewModelFactory(MoviesInteractor(requireContext()))
+        MovieListViewModelFactory(MoviesInteractor())
     }
     private val binding: FragmentMoviesListBinding get() = _binding!!
     private var _binding: FragmentMoviesListBinding? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,7 +33,7 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieListViewModel.getMovies()
+        movieListViewModel.getMovieList()
 
         binding.movieListRecyclerView.let {
             it.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -57,14 +57,14 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
     override fun onMovieClick(movie: Movie) {
         requireActivity().supportFragmentManager
-                .beginTransaction()
-                .add(
-                        R.id.main_container,
-                        MoviesDetailsFragment.newInstance(movie.id),
-                        MoviesDetailsFragment.TAG
-                )
-                .addToBackStack(MoviesDetailsFragment.TAG)
-                .commit()
+            .beginTransaction()
+            .add(
+                R.id.main_container,
+                MoviesDetailsFragment.newInstance(movie.id),
+                MoviesDetailsFragment.TAG
+            )
+            .addToBackStack(MoviesDetailsFragment.TAG)
+            .commit()
     }
 }
 

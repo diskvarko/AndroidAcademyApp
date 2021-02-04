@@ -11,11 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
 import com.diskvarko.androidacademyapp.R
-import com.diskvarko.androidacademyapp.data.Genre
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
+import com.diskvarko.androidacademyapp.movieList.MoviesInteractor
+import com.diskvarko.androidacademyapp.network.data.Genre
 
 class MoviesDetailsFragment : Fragment() {
 
@@ -24,16 +24,16 @@ class MoviesDetailsFragment : Fragment() {
     private var binding: FragmentMoviesDetailsBinding? = null
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels() {
-        MovieDetailsViewModelFactory(MoviesInteractor(requireContext()))
+        MovieDetailsViewModelFactory(MoviesInteractor())
     }
 
     private var selectedMovieID: Int = 0
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_movies_details, container, false)
 
 
@@ -45,8 +45,8 @@ class MoviesDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         movieDetailsViewModel.moviesLiveData.observe(
-                this.viewLifecycleOwner,
-                Observer { movieDetailsViewModel.getMovie() })
+            this.viewLifecycleOwner,
+            Observer { movieDetailsViewModel.getMovie() })
         if (savedInstanceState == null) {
             movieDetailsViewModel.setMovie(selectedMovieID)
         }
@@ -57,13 +57,14 @@ class MoviesDetailsFragment : Fragment() {
             binding!!.nameFilm.text = movie.title
             binding!!.ratingAge.text = "${movie.minimumAge} +"
             binding!!.descriptionStoryline.text = movie.overview
-            binding!!.ratingBar.rating = setRating(movie.ratings)
+            binding!!.ratingBar.rating = setRating(movie.ratings.toFloat())
             binding!!.genre.text = setTags(movie.genres)
             binding!!.review.text = "${movie.numberOfRatings} REVIEWS"
 
             binding!!.actorList.apply {
                 adapter = ActorsAdapter(movie.actors)
-                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             }
 
             if (movie.actors.isNotEmpty()) {
@@ -86,9 +87,9 @@ class MoviesDetailsFragment : Fragment() {
         private const val MOVIE_ID = "movieId"
         const val TAG = "MovieDetailsFragment"
 
-        fun newInstance(movieID: Int): MoviesDetailsFragment {
+        fun newInstance(movieID: Long): MoviesDetailsFragment {
             val movieFragment = MoviesDetailsFragment()
-            movieFragment.selectedMovieID = movieID
+            movieFragment.selectedMovieID = movieID.toInt()
             return movieFragment
         }
 

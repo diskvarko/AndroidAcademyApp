@@ -1,109 +1,55 @@
 package com.diskvarko.androidacademyapp.data
 
-import android.content.Context
+import com.diskvarko.androidacademyapp.network.data.Configuration
+import com.diskvarko.androidacademyapp.network.data.Genre
+import com.diskvarko.androidacademyapp.network.data.Movies
+import com.diskvarko.androidacademyapp.network.Retrofit.movieApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.ExperimentalSerializationApi
 
 
-private val jsonFormat = Json { ignoreUnknownKeys = true }
+@ExperimentalSerializationApi
+private suspend fun getConfiguration(): Configuration = movieApi.getConfiguration()
 
-@Serializable
-private class JsonGenre(val id: Int, val name: String)
+@ExperimentalSerializationApi
+private suspend fun getMovies(): Movies = movieApi.getMovies()
 
-@Serializable
-private class JsonActor(
-        val id: Int,
-        val name: String,
-        @SerialName("profile_path")
-        val profilePicture: String
-)
+@ExperimentalSerializationApi
+private suspend fun getGenres(): Map<Int, Genre> =
+    movieApi.getGenres().genres.map { it.id to it }.toMap()
 
-@Serializable
-private class JsonMovie(
-        val id: Int,
-        val title: String,
-        @SerialName("poster_path")
-        val posterPicture: String,
-        @SerialName("backdrop_path")
-        val backdropPicture: String,
-        val runtime: Int,
-        @SerialName("genre_ids")
-        val genreIds: List<Int>,
-        val actors: List<Int>,
-        @SerialName("vote_average")
-        val ratings: Float,
-        @SerialName("vote_count")
-        val votesCount: Int,
-        val overview: String,
-        val adult: Boolean
-)
-
-private suspend fun loadGenres(context: Context): List<Genre> = withContext(Dispatchers.IO) {
-    val data = readAssetFileToString(context, "genres.json")
-    parseGenres(data)
+@ExperimentalSerializationApi
+private suspend fun getActors(movieId: Long): List<Actor> {
+    return movieApi.getCredits(movieId).cast
+        .map { Actor(it.castID ?: 0, it.profilePath ?: "", it.name) }
+        .toList()
 }
 
-internal fun parseGenres(data: String): List<Genre> {
-    val jsonGenres = jsonFormat.decodeFromString<List<JsonGenre>>(data)
-    return jsonGenres.map { Genre(id = it.id, name = it.name) }
-}
+@ExperimentalSerializationApi
+private suspend fun getRuntime(movieId: Long): Int = movieApi.getDetails(movieId).runtime
 
-private fun readAssetFileToString(context: Context, fileName: String): String {
-    val stream = context.assets.open(fileName)
-    return stream.bufferedReader().readText()
-}
+@ExperimentalSerializationApi
+suspend fun getMoviesList(): List<Movie> = withContext(Dispatchers.IO) {
 
-private suspend fun loadActors(context: Context): List<Actor> = withContext(Dispatchers.IO) {
-    val data = readAssetFileToString(context, "people.json")
-    parseActors(data)
-}
+    val baseUrl = getConfiguration().images.secureBaseURL.dropLast(1)
 
-internal fun parseActors(data: String): List<Actor> {
-    val jsonActors = jsonFormat.decodeFromString<List<JsonActor>>(data)
-    return jsonActors.map { Actor(id = it.id, name = it.name, picture = it.profilePicture) }
-}
+    val genres: Map<Int, Genre> = getGenres()
 
-@Suppress("unused")
-internal suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
-    val genresMap = loadGenres(context)
-    val actorsMap = loadActors(context)
-
-    val data = readAssetFileToString(context, "data.json")
-    parseMovies(data, genresMap, actorsMap)
-}
-
-internal fun parseMovies(
-        data: String,
-        genres: List<Genre>,
-        actors: List<Actor>
-): List<Movie> {
-    val genresMap = genres.associateBy { it.id }
-    val actorsMap = actors.associateBy { it.id }
-
-    val jsonMovies = jsonFormat.decodeFromString<List<JsonMovie>>(data)
-
-    return jsonMovies.map { jsonMovie ->
-        @Suppress("unused")
-        (Movie(
-                id = jsonMovie.id,
-                title = jsonMovie.title,
-                overview = jsonMovie.overview,
-                poster = jsonMovie.posterPicture,
-                backdrop = jsonMovie.backdropPicture,
-                ratings = jsonMovie.ratings,
-                numberOfRatings = jsonMovie.votesCount,
-                minimumAge = if (jsonMovie.adult) 16 else 13,
-                runtime = jsonMovie.runtime,
-                genres = jsonMovie.genreIds.map {
-                    genresMap[it] ?: throw IllegalArgumentException("Genre not found")
-                },
-                actors = jsonMovie.actors.map {
-                    actorsMap[it] ?: throw IllegalArgumentException("Actor not found")
-                }
-        ))
+    return@withContext getMovies().results.map {
+        Movie(
+            id = it.id,
+            title = it.title,
+            overview = it.overview,
+            poster = "$baseUrl/original/${it.posterPath}",
+            backdrop = "$baseUrl/original/${it.backdropPath}",
+            ratings = it.voteAverage.toFloat(),
+            numberOfRatings = it.voteCount,
+            minimumAge = if (it.adult) 16 else 13,
+            runtime = getRuntime(it.id),
+            genres = it.genreIDS.map { id -> genres.getOrDefault(id.toInt(), Genre(0, "")) }
+                .toList(),
+            actors = getActors(it.id).map { actor -> actor.copy(picture = "$baseUrl/original/${actor.picture}") }
+        )
     }
 }

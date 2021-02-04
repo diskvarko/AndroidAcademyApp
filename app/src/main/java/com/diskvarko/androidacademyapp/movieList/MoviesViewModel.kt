@@ -13,12 +13,12 @@ class MoviesViewModel(private val interactor: MoviesInteractor) : ViewModel() {
     val movieListLiveData: LiveData<List<Movie>> get() = _movieLiveData
 
     init {
-        getMovies()
+        getMovieList()
     }
 
-    fun getMovies() {
+    fun getMovieList() {
         viewModelScope.launch {
-            _movieLiveData.postValue(interactor.getMoviesList())
+            _movieLiveData.postValue(interactor.getMovies())
         }
     }
 }
