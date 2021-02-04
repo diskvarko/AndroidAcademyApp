@@ -1,7 +1,6 @@
 package com.diskvarko.androidacademyapp
 
 import com.diskvarko.androidacademyapp.data.Movie
-import com.diskvarko.androidacademyapp.data.getMoviesList
 import com.diskvarko.androidacademyapp.room.DaoMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

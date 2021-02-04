@@ -8,7 +8,7 @@ class Converters {
 
     @TypeConverter
     fun fromGenres(genres: List<Genre>): String =
-        genres.joinToString("|") { "${it.id}:${it.name}" }
+            genres.joinToString("|") { "${it.id}:${it.name}" }
 
     @TypeConverter
     fun toGenres(genres: String): List<Genre> {

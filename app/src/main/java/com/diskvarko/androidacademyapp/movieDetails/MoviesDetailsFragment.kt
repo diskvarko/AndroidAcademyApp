@@ -33,6 +33,20 @@ class MoviesDetailsFragment : Fragment() {
         MovieDetailsViewModelFactory(repository)
     }
 
+    companion object {
+
+        private const val MOVIE_ID = "movieId"
+        const val TAG = "MovieDetailsFragment"
+
+        fun newInstance(movieId: Int): MoviesDetailsFragment {
+            val bundle = Bundle()
+            bundle.putInt(MOVIE_ID, movieId)
+            val movieFragment = MoviesDetailsFragment()
+            movieFragment.arguments = bundle
+            return movieFragment
+        }
+
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -53,16 +67,16 @@ class MoviesDetailsFragment : Fragment() {
         movieDetailsViewModel.getMovie(movieId!!)
 
         movieDetailsViewModel.movieLiveData.observe(viewLifecycleOwner) { movie: Movie ->
-
-            binding!!.background.load(movie.backdrop)
-            binding!!.nameFilm.text = movie.title
-            binding!!.ratingAge.text = "${movie.minimumAge} +"
-            binding!!.descriptionStoryline.text = movie.overview
-            binding!!.ratingBar.rating = setRating(movie.ratings.toFloat())
-            binding!!.genre.text = setTags(movie.genres)
-            binding!!.review.text = "${movie.numberOfRatings} REVIEWS"
-
-            binding!!.actorList.apply {
+            binding?.apply {
+                background.load(movie.backdrop)
+                nameFilm.text = movie.title
+                ratingAge.text = "${movie.minimumAge} +"
+                descriptionStoryline.text = movie.overview
+                ratingBar.rating = setRating(movie.ratings.toFloat())
+                genre.text = setTags(movie.genres)
+                review.text = "${movie.numberOfRatings} REVIEWS"
+            }
+            binding?.actorList?.apply {
                 adapter = ActorsAdapter(movie.actors)
                 layoutManager =
                         LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
@@ -83,20 +97,6 @@ class MoviesDetailsFragment : Fragment() {
 
     private fun setTags(genres: List<Genre>): String = genres.joinToString(", ") { it.name }
 
-    companion object {
-
-        private const val MOVIE_ID = "movieId"
-        const val TAG = "MovieDetailsFragment"
-
-        fun newInstance(movieId: Int): MoviesDetailsFragment {
-            val bundle = Bundle()
-            bundle.putInt(MOVIE_ID, movieId)
-            val movieFragment = MoviesDetailsFragment()
-            movieFragment.arguments = bundle
-            return movieFragment
-        }
-
-    }
 
     override fun onAttach(context: Context) {
         if (context is MovieDetailsClickListener) {

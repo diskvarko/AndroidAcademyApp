@@ -8,13 +8,12 @@ import com.diskvarko.androidacademyapp.MoviesInteractor
 import com.diskvarko.androidacademyapp.data.Movie
 import kotlinx.coroutines.launch
 
-class MovieDetailsViewModel (private val interactor: MoviesInteractor) : ViewModel() {
+class MovieDetailsViewModel(private val interactor: MoviesInteractor) : ViewModel() {
 
     private var _movieLiveData: MutableLiveData<Movie> = MutableLiveData<Movie>()
     val movieLiveData: LiveData<Movie> get() = _movieLiveData
 
     private var _loadingLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    val loadingLiveData: LiveData<Boolean> get() = _loadingLiveData
 
     fun getMovie(movieId: Int) {
         viewModelScope.launch {

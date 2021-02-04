@@ -1,6 +1,9 @@
 package com.diskvarko.androidacademyapp.room
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.diskvarko.androidacademyapp.data.Movie
 
 @Dao
@@ -14,6 +17,5 @@ interface DaoMovie {
 
     @Query("SELECT * FROM movies WHERE id = :id ")
     suspend fun getMovieById(id: Int): Movie
-
 
 }

@@ -5,12 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Genres(
-    val genres: List<Genre>
+        val genres: List<Genre>
 )
 
 @Serializable
 data class Genre(
 
-    val id: Int,
-    val name: String
+        val id: Int,
+        val name: String
 )
