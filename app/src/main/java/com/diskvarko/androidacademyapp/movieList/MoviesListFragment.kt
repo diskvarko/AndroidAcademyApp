@@ -11,17 +11,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
 import com.diskvarko.androidacademyapp.MoviesInteractor
+import com.diskvarko.androidacademyapp.MoviesRepository
 import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.data.getMoviesList
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesListBinding
 import com.diskvarko.androidacademyapp.movieDetails.MoviesDetailsFragment
-import com.diskvarko.androidacademyapp.room.getDatabase
-import com.diskvarko.androidacademyapp.MoviesRepository
+import com.diskvarko.androidacademyapp.room.MoviesDB.Companion.getDatabase
 import com.diskvarko.androidacademyapp.workManager.RefreshDataWorker.Companion.WORK_NAME
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 
 const val LOG_TAG = "DBCREATION"
 
@@ -49,8 +50,14 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
         return binding.root
     }
 
+    @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        WorkManager.getInstance(requireContext().applicationContext)
+                .enqueueUniquePeriodicWork(WORK_NAME,
+                        ExistingPeriodicWorkPolicy.REPLACE,
+                        MoviesRepository().repeatingRequest)
 
         CoroutineScope(Dispatchers.IO).launch {
             val movies = getMoviesList()

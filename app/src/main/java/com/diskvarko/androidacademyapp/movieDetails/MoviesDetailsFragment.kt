@@ -15,13 +15,13 @@ import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesDetailsBinding
 import com.diskvarko.androidacademyapp.network.data.Genre
-import com.diskvarko.androidacademyapp.room.MoviesDB
+import com.diskvarko.androidacademyapp.room.MoviesDB.Companion.getDatabase
 import kotlinx.serialization.ExperimentalSerializationApi
 
 class MoviesDetailsFragment : Fragment() {
 
     private val repository: MoviesInteractor by lazy {
-        val db = MoviesDB.createDb(this.requireContext().applicationContext)
+        val db = getDatabase(requireContext().applicationContext)
         MoviesInteractor(db.movieDao())
     }
 

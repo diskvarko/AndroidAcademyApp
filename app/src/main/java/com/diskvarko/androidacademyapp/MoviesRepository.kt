@@ -16,15 +16,8 @@ class MoviesRepository {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
 
-    private fun setupRecurringWork() {
-        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(15, TimeUnit.MINUTES)
-                .setConstraints(constraints)
-                .build()
-
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
-                RefreshDataWorker.WORK_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
-                repeatingRequest)
-    }
+    val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(15, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
 
 }
