@@ -3,17 +3,13 @@ package com.diskvarko.androidacademyapp.workManager
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.diskvarko.androidacademyapp.MoviesInteractor
 import com.diskvarko.androidacademyapp.data.getMoviesList
 import com.diskvarko.androidacademyapp.movieList.LOG_TAG
-import com.diskvarko.androidacademyapp.network.data.Movies
-import com.diskvarko.androidacademyapp.room.MoviesDB
 import com.diskvarko.androidacademyapp.room.MoviesDB.Companion.getDatabase
 import kotlinx.serialization.ExperimentalSerializationApi
 import retrofit2.HttpException
-import java.util.Calendar.getInstance
 
 class RefreshDataWorker(appContext: Context, workerParams: WorkerParameters) : CoroutineWorker(appContext, workerParams) {
 
@@ -26,16 +22,15 @@ class RefreshDataWorker(appContext: Context, workerParams: WorkerParameters) : C
     @ExperimentalSerializationApi
     override suspend fun doWork(): Result {
 
-        try {
+        return try {
             Log.d(LOG_TAG, "Work request for sync is run")
             val movies = getMoviesList()
             repository.addMovies(movies)
-            return Result.success()
+            Result.success()
         }
         catch (e: HttpException) {
             Log.d(LOG_TAG, "Exception")
-
-            return Result.retry()
+            Result.retry()
         }
 
 

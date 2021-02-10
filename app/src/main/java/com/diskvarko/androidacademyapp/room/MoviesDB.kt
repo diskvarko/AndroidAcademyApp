@@ -20,20 +20,17 @@ abstract class MoviesDB : RoomDatabase() {
 
     companion object {
 
-        private var INSTANCE: MoviesDB? = null
 
-        fun getDatabase(context: Context): MoviesDB {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(context.applicationContext, MoviesDB::class.java, NAME_DB)
-                        .fallbackToDestructiveMigration()
-                        .build()
-                INSTANCE = instance
-                instance
-            }
+        fun getDatabase(context: Context): MoviesDB = Room.databaseBuilder(
+                context,
+                MoviesDB::class.java,
+                NAME_DB
+        )
+                .fallbackToDestructiveMigration()
+                .build()
 
-        }
     }
-
 }
+
 
 

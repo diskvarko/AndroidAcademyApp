@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
 import com.diskvarko.androidacademyapp.MoviesInteractor
-import com.diskvarko.androidacademyapp.MoviesRepository
+import com.diskvarko.androidacademyapp.workManager.MoviesRepository
 import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
 import com.diskvarko.androidacademyapp.data.getMoviesList

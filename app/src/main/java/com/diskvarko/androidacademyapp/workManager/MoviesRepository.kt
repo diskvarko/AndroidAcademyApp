@@ -1,4 +1,4 @@
-package com.diskvarko.androidacademyapp
+package com.diskvarko.androidacademyapp.workManager
 
 import androidx.work.*
 import com.diskvarko.androidacademyapp.workManager.RefreshDataWorker
@@ -9,14 +9,13 @@ import java.util.concurrent.TimeUnit
 class MoviesRepository {
 
 
-    val constraints = Constraints.Builder()
+    private val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiresBatteryNotLow(true)
             .build()
 
-    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
-
-    val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(15, TimeUnit.MINUTES)
+    val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(8L, TimeUnit.HOURS)
             .setConstraints(constraints)
             .build()
 
