@@ -16,20 +16,25 @@ const val NAME_DB = "movies database"
 @TypeConverters(Converters::class)
 abstract class MoviesDB : RoomDatabase() {
 
-
     abstract fun movieDao(): DaoMovie
 
 
-    companion object {
+}
+private lateinit var INSTANCE: MoviesDB
 
-        fun createDb(context: Context): MoviesDB = Room.databaseBuilder(
-                context,
-                MoviesDB::class.java,
-                NAME_DB
-        )
-                .fallbackToDestructiveMigration()
-                .build()
+fun getDatabase(context: Context): MoviesDB {
+    synchronized(MoviesDB::class.java) {
+        if (!::INSTANCE.isInitialized) {
+            INSTANCE = Room.databaseBuilder(
+                    context.applicationContext,
+                    MoviesDB::class.java,
+                    NAME_DB
+            )
+                    .fallbackToDestructiveMigration()
+                    .build()
 
+        }
     }
+    return INSTANCE
 }
 
