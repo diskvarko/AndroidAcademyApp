@@ -1,30 +1,45 @@
 package com.diskvarko.androidacademyapp.movieList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.diskvarko.androidacademyapp.MoviesInteractor
 import com.diskvarko.androidacademyapp.R
 import com.diskvarko.androidacademyapp.data.Movie
+import com.diskvarko.androidacademyapp.data.getMoviesList
 import com.diskvarko.androidacademyapp.databinding.FragmentMoviesListBinding
 import com.diskvarko.androidacademyapp.movieDetails.MoviesDetailsFragment
+import com.diskvarko.androidacademyapp.room.MoviesDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+const val LOG_TAG = "DBCREATION"
 
 class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
+    private val repository: MoviesInteractor by lazy {
+        val db = MoviesDB.createDb(this.requireContext().applicationContext)
+        MoviesInteractor(db.movieDao())
+    }
+
     private val movieListViewModel: MoviesViewModel by viewModels()
     {
-        MovieListViewModelFactory(MoviesInteractor())
+        MovieListViewModelFactory(repository)
     }
+
     private val binding: FragmentMoviesListBinding get() = _binding!!
     private var _binding: FragmentMoviesListBinding? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,6 +47,12 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val movies = getMoviesList()
+            Log.d(LOG_TAG, "$movies")
+            Log.d(LOG_TAG, "onViewCreated: movies count ${movies.size}")
+        }
 
         movieListViewModel.getMovieList()
 
@@ -57,14 +78,14 @@ class MoviesListFragment() : Fragment(), MoviesAdapter.OnMovieClickListener {
 
     override fun onMovieClick(movie: Movie) {
         requireActivity().supportFragmentManager
-            .beginTransaction()
-            .add(
-                R.id.main_container,
-                MoviesDetailsFragment.newInstance(movie.id),
-                MoviesDetailsFragment.TAG
-            )
-            .addToBackStack(MoviesDetailsFragment.TAG)
-            .commit()
+                .beginTransaction()
+                .add(
+                        R.id.main_container,
+                        MoviesDetailsFragment.newInstance(movie.id),
+                        MoviesDetailsFragment.TAG
+                )
+                .addToBackStack(MoviesDetailsFragment.TAG)
+                .commit()
     }
 }
 

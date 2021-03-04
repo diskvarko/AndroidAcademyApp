@@ -8,7 +8,6 @@ import com.diskvarko.androidacademyapp.data.Actor
 
 class ActorsAdapter(private var cast: List<Actor>) : RecyclerView.Adapter<ActorsViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
